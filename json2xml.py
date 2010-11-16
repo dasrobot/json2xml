@@ -50,7 +50,7 @@ def parse_json_stdin(root):
   js = "".join(sys.stdin.readlines())
   j = json.loads(js)
   doc = parse_doc(root, j)
-  print doc.toprettyxml(indent="  ")
+  print doc.toprettyxml(encoding="utf-8", indent="  ")
 
 def usage():
   print '''
