@@ -18,7 +18,11 @@ def parse_element(doc, root, j):
           parse_element(doc, elem, e)
           root.appendChild(elem)
       else:
-        elem = doc.createElement(key)
+        if key.isdigit():
+          elem = doc.createElement('item')
+          elem.setAttribute('value', key)
+        else:
+          elem = doc.createElement(key)
         parse_element(doc, elem, value)
         root.appendChild(elem)
   elif isinstance(j, str) or isinstance(j, unicode):
