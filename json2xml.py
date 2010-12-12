@@ -4,14 +4,15 @@ import sys
 import json
 import traceback
 import getopt
+import numbers
 
 from xml.dom.minidom import Document
 
 def parse_element(doc, root, j):
-  if type(j) == type(dict()):
+  if isinstance(j, dict):
     for key in j.keys():
       value = j[key]
-      if type(value) == type(list()):
+      if isinstance(value, list):
         for e in value:
           elem = doc.createElement(key)
           parse_element(doc, elem, e)
@@ -20,11 +21,14 @@ def parse_element(doc, root, j):
         elem = doc.createElement(key)
         parse_element(doc, elem, value)
         root.appendChild(elem)
-  elif type(j) == type(str()) or type(j) == type(unicode()):
+  elif isinstance(j, str) or isinstance(j, unicode):
     text = doc.createTextNode(j)
     root.appendChild(text)
+  elif isinstance(j, numbers.Number):
+    text = doc.createTextNode(str(j))
+    root.appendChild(text)
   else:
-    raise Exception("bad type" + str(type(j)))
+    raise Exception("bad type '%s' for '%s'" % (type(j), j,))
 
 def parse_doc(root, j):
   doc = Document()
