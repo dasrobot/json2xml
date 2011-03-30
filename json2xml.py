@@ -62,7 +62,7 @@ def parse_json_stdin(root):
 
 def usage():
   print '''
-Usage:    %s <-t access token> <-a verification_code>
+Usage:    %s <-r root element>
 
 -r (--root):        root element name
 
